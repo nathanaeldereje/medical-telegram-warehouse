@@ -1,0 +1,14 @@
+.env
+.vscode/
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+.pytest_cache/
+# Ignore data folder as per instructions (Data Lake)
+data/
+logs/
+# dbt specific
+medical_warehouse/target/
+medical_warehouse/dbt_packages/
+medical_warehouse/logs/

@@ -1,0 +1,28 @@
+# --- Initial Setup & Task 1: Scraping (Extract) ---
+python-dotenv==1.0.1
+Telethon==1.42.0          # ← bump: better Telegram API compatibility
+pandas==2.2.2
+tqdm==4.66.4
+# Dev / Analysis Tools
+notebook==7.2.1
+pytest==8.2.2
+matplotlib==3.9.0
+
+# --- Task 2: Transformation (Load & Transform) ---
+# dbt-postgres==1.9.1       # ← bump: recent stable adapter
+# psycopg2-binary==2.9.9
+# sqlalchemy==2.0.30
+
+# --- Task 3: Enrichment (YOLOv8) ---
+# ultralytics==8.4.2        # ← bump: YOLO26 benefits (Jan 2026 release)
+# opencv-python-headless==4.10.0.82
+
+# --- Task 4: API (FastAPI) ---
+# fastapi==0.111.0
+# uvicorn==0.30.1
+# pydantic==2.7.4
+# pydantic-settings==2.3.3
+
+# --- Task 5: Orchestration (Dagster) ---
+# dagster==1.7.15
+# dagster-webserver==1.7.15

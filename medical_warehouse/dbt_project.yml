@@ -1,0 +1,27 @@
+name: 'medical_warehouse'
+version: '1.0.0'
+config-version: 2
+
+# This must match the key in profiles.yml below
+profile: 'medical_warehouse'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  medical_warehouse:
+    # Staging models (cleaning) will be views
+    staging:
+      +materialized: view
+    # Marts (final tables) will be actual tables
+    marts:
+      +materialized: table
