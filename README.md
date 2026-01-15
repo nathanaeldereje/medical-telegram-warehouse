@@ -149,6 +149,5 @@ uvicorn api.main:app --reload
 *(Screenshots of dbt docs, API Swagger UI, and Dagster Graph will be added here upon completion)*
 
 ---
-*Developed as part of the 10 Academy: Artificial Intelligence Mastery - Week 8 Challenge.*  
 **Author:** Nathanael Dereje  
 **Date:** January 2026
