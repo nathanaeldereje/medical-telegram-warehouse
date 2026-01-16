@@ -6,7 +6,7 @@ This directory contains executable scripts for running individual components of 
 
 | Script Name | Task | Description |
 | :--- | :--- | :--- |
-| **`scrape.py`** | **Extract** | Connects to Telegram API, downloads messages/images, and saves raw JSON to `data/raw/`. |
+| **`scrape_data.py`** | **Extract** | Connects to Telegram API, downloads messages/images, and saves raw JSON to `data/raw/`. |
 | **`load_raw.py`** | **Load** | Reads JSON files from the data lake and inserts them into the `raw.telegram_messages` table in PostgreSQL. |
 | **`detect_objects.py`** | **Enrich** | Scans downloaded images, runs YOLOv8 inference, and saves detection results to CSV/DB. |
 | **`cleanup.py`** | **Maintenance** | Utility to clear logs or temporary files (optional). |

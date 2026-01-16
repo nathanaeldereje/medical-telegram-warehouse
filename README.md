@@ -110,7 +110,7 @@ medical-telegram-warehouse/
 ### 1. Data Collection (Extract)
 Run the scraper to populate the Data Lake (`data/raw`).
 ```bash
-python scripts/scrape.py
+python scripts/scrape_data.py
 ```
 
 ### 2. Data Transformation (Load & Transform)
@@ -134,13 +134,13 @@ uvicorn api.main:app --reload
 ```
 *Access docs at: `http://localhost:8000/docs`*
 
-## 🚀 Project Roadmap
+## 🚀 Project Roadmap(As of Jan 16)
 
 | Phase | Task Description | Status |
 | :--- | :--- | :--- |
 | **0. Setup** | Project Structure, Docker DB, Git Setup | ✅ Completed |
-| **1. Scraping** | Extract text/images from Telegram channels | 🚧 In Progress |
-| **2. Modeling** | Load data to Postgres & build Star Schema with dbt | ⏳ Pending |
+| **1. Scraping** | Extract text/images from Telegram channels | ✅ Completed |
+| **2. Modeling** | Load data to Postgres & build Star Schema with dbt | 🚧 In Progress |
 | **3. Enrichment** | Integrate YOLOv8 for image classification | ⏳ Pending |
 | **4. API** | Build FastAPI endpoints for analytics | ⏳ Pending |
 | **5. Orchestration** | Automate workflow with Dagster | ⏳ Pending |
