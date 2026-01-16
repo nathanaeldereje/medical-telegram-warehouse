@@ -12,3 +12,10 @@ logs/
 medical_warehouse/target/
 medical_warehouse/dbt_packages/
 medical_warehouse/logs/
+
+
+
+
+medical_scraper_session.*
+notebooks/medical_scraper_dev_session*
+notebooks/test*
