@@ -17,11 +17,12 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+
 models:
   medical_warehouse:
-    # Staging models (cleaning) will be views
     staging:
       +materialized: view
-    # Marts (final tables) will be actual tables
+      +schema: staging
     marts:
       +materialized: table
+      +schema: marts
