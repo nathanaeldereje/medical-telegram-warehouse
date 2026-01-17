@@ -31,7 +31,7 @@ async def main():
         for channel in CHANNELS:
             # Extract username from URL if necessary
             handle = channel.split('/')[-1]
-            await scraper.scrape_channel(handle, limit=300) # Start small with 200
+            await scraper.scrape_channel(handle, limit=500) # Start small with 500
             
     finally:
         scraper.close()

@@ -3,10 +3,10 @@ medical_warehouse:
   outputs:
     dev:
       type: postgres
-      host: localhost       # Connects to your Docker container
-      user: postgres
-      password: password    # Matches docker-compose.yml
-      port: 5432
-      dbname: medical_warehouse
+      host: "{{ env_var('POSTGRES_HOST') }}"
+      user: "{{ env_var('POSTGRES_USER') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD') }}"
+      port: "{{ env_var('POSTGRES_PORT') | int }}"
+      dbname: "{{ env_var('POSTGRES_DB') }}"
       schema: public
       threads: 1

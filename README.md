@@ -113,35 +113,49 @@ Run the scraper to populate the Data Lake (`data/raw`).
 python scripts/scrape_data.py
 ```
 
-### 2. Data Transformation (Load & Transform)
-Load raw data into Postgres and run dbt models.
+### 2. Data Loading (Load)
+Parse JSON files from the Data Lake and load them into the `raw.telegram_messages` table in PostgreSQL.
 ```bash
 python scripts/load_raw.py
-cd medical_warehouse
-dbt build
 ```
 
-### 3. Enrichment (Object Detection)
-Run YOLOv8 to detect objects in downloaded images and update the warehouse.
+### 3. Data Transformation (Transform)
+Use dbt to clean data and build the Star Schema.
+
+**Note for Windows Users:**
+I have included a helper script to inject `.env` variables into the terminal for dbt.
+```powershell
+# 1. Set Environment Variables
+./medical_warehouse/set-dbt-env.ps1
+
+# 2. Run dbt
+cd medical_warehouse
+dbt debug --profiles-dir .       #(If you get "All checks passed", proceed. If not, check credentials).
+dbt deps    # Install dependencies (dbt_utils)
+dbt build   # Run models and tests
+```
+
+### 4. Enrichment (Object Detection)
+*Coming Soon:* Run YOLOv8 to detect objects in downloaded images.
 ```bash
 python scripts/detect_objects.py
 ```
 
-### 4. Serve Insights (API)
-Launch the FastAPI server to access the analytical endpoints.
+### 5. Serve Insights (API)
+*Coming Soon:* Launch the FastAPI server to access the analytical endpoints.
 ```bash
 uvicorn api.main:app --reload
 ```
 *Access docs at: `http://localhost:8000/docs`*
 
-## 🚀 Project Roadmap(As of Jan 16)
+## 🚀 Project Roadmap(As of Jan 17)
 
 | Phase | Task Description | Status |
 | :--- | :--- | :--- |
 | **0. Setup** | Project Structure, Docker DB, Git Setup | ✅ Completed |
 | **1. Scraping** | Extract text/images from Telegram channels | ✅ Completed |
-| **2. Modeling** | Load data to Postgres & build Star Schema with dbt | 🚧 In Progress |
-| **3. Enrichment** | Integrate YOLOv8 for image classification | ⏳ Pending |
+| **2. Modeling** | Load data to Postgres & build Star Schema with dbt | ✅ Completed |
+| **3. Enrichment** | Integrate YOLOv8 for image classification | 🚧 In Progress |
 | **4. API** | Build FastAPI endpoints for analytics | ⏳ Pending |
 | **5. Orchestration** | Automate workflow with Dagster | ⏳ Pending |
 

@@ -10,9 +10,9 @@ pytest==8.2.2
 matplotlib==3.9.0
 
 # --- Task 2: Transformation (Load & Transform) ---
-# dbt-postgres==1.9.1       # ← bump: recent stable adapter
-# psycopg2-binary==2.9.9
-# sqlalchemy==2.0.30
+dbt-postgres==1.7.3        # ← bump: recent stable adapter
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.30
 
 # --- Task 3: Enrichment (YOLOv8) ---
 # ultralytics==8.4.2        # ← bump: YOLO26 benefits (Jan 2026 release)
