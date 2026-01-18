@@ -113,13 +113,21 @@ Run the scraper to populate the Data Lake (`data/raw`).
 python scripts/scrape_data.py
 ```
 
-### 2. Data Loading (Load)
-Parse JSON files from the Data Lake and load them into the `raw.telegram_messages` table in PostgreSQL.
+### 2. Object Detection (Enrich)
+Runs YOLOv8 on downloaded images to generate classification data (`yolo_results.csv`).
+```bash
+python scripts/detect_objects.py
+```
+
+
+
+### 3. Data Loading (Load)
+Syncs both the JSON messages and the YOLO CSV results into PostgreSQL (`raw` schema).
 ```bash
 python scripts/load_raw.py
 ```
 
-### 3. Data Transformation (Transform)
+### 4. Data Transformation (Transform)
 Use dbt to clean data and build the Star Schema.
 
 **Note for Windows Users:**
@@ -135,11 +143,7 @@ dbt deps    # Install dependencies (dbt_utils)
 dbt build   # Run models and tests
 ```
 
-### 4. Enrichment (Object Detection)
-*Coming Soon:* Run YOLOv8 to detect objects in downloaded images.
-```bash
-python scripts/detect_objects.py
-```
+
 
 ### 5. Serve Insights (API)
 *Coming Soon:* Launch the FastAPI server to access the analytical endpoints.
@@ -148,15 +152,15 @@ uvicorn api.main:app --reload
 ```
 *Access docs at: `http://localhost:8000/docs`*
 
-## 🚀 Project Roadmap(As of Jan 17)
+## 🚀 Project Roadmap(As of Jan 18)
 
 | Phase | Task Description | Status |
 | :--- | :--- | :--- |
 | **0. Setup** | Project Structure, Docker DB, Git Setup | ✅ Completed |
 | **1. Scraping** | Extract text/images from Telegram channels | ✅ Completed |
 | **2. Modeling** | Load data to Postgres & build Star Schema with dbt | ✅ Completed |
-| **3. Enrichment** | Integrate YOLOv8 for image classification | 🚧 In Progress |
-| **4. API** | Build FastAPI endpoints for analytics | ⏳ Pending |
+| **3. Enrichment** | Integrate YOLOv8 for image classification | ✅ Completed |
+| **4. API** | Build FastAPI endpoints for analytics | 🚧 In Progress |
 | **5. Orchestration** | Automate workflow with Dagster | ⏳ Pending |
 
 ## 📸 Dashboard / API Preview
