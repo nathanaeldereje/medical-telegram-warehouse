@@ -15,8 +15,8 @@ psycopg2-binary==2.9.9
 sqlalchemy==2.0.30
 
 # --- Task 3: Enrichment (YOLOv8) ---
-# ultralytics==8.4.2        # ← bump: YOLO26 benefits (Jan 2026 release)
-# opencv-python-headless==4.10.0.82
+ultralytics==8.2.2        # ← bump: YOLO26 benefits (Jan 2026 release)
+opencv-python-headless==4.10.0.82
 
 # --- Task 4: API (FastAPI) ---
 # fastapi==0.111.0

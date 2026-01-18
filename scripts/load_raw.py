@@ -18,12 +18,12 @@ DB_PORT = os.getenv("POSTGRES_PORT", "5432")
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 def create_raw_schema(engine):
-    """Creates the 'raw' schema and the telegram_messages table."""
+    """Creates the 'raw' schema and tables."""
     with engine.connect() as connection:
         connection.execute(text("CREATE SCHEMA IF NOT EXISTS raw;"))
         
-        # Create table with a unique constraint on message_id and channel_name to prevent dupes
-        create_table_query = """
+        # 1. Telegram Messages Table
+        connection.execute(text("""
         CREATE TABLE IF NOT EXISTS raw.telegram_messages (
             id SERIAL PRIMARY KEY,
             message_id BIGINT,
@@ -37,10 +37,22 @@ def create_raw_schema(engine):
             scraped_at TIMESTAMP,
             CONSTRAINT unique_msg_channel UNIQUE (message_id, channel_name)
         );
-        """
-        connection.execute(text(create_table_query))
+        """))
+
+        # 2. YOLO Detections Table (THIS WAS MISSING)
+        connection.execute(text("""
+        CREATE TABLE IF NOT EXISTS raw.yolo_detections (
+            message_id BIGINT PRIMARY KEY,
+            channel_name TEXT,
+            image_path TEXT,
+            detected_objects TEXT,
+            best_confidence FLOAT,
+            image_category TEXT
+        );
+        """))
+        
         connection.commit()
-        print("Schema 'raw' and table 'telegram_messages' ready.")
+        print("Schema 'raw' and tables ready.")
 
 def load_json_to_postgres(engine):
     """Iterates over JSON files and loads them into Postgres."""
@@ -98,8 +110,42 @@ def load_json_to_postgres(engine):
         connection.commit()
         
     print(f"Successfully processed {len(df)} records.")
+def load_yolo_to_postgres(engine):
+    """Loads the YOLO results CSV into Postgres."""
+    csv_path = "data/processed/yolo_results.csv"
+    
+    if not os.path.exists(csv_path):
+        print("Skipping YOLO load: CSV not found. Run scripts/detect_objects.py first.")
+        return
+
+    print("Loading YOLO results...")
+    df = pd.read_csv(csv_path)
+    
+    # Clean data
+    df['message_id'] = pd.to_numeric(df['message_id'], errors='coerce')
+    df = df.dropna(subset=['message_id'])
+    df['message_id'] = df['message_id'].astype(int)
+
+    with engine.connect() as connection:
+        df.to_sql('temp_yolo', connection, if_exists='replace', index=False)
+        
+        upsert_query = """
+        INSERT INTO raw.yolo_detections (message_id, channel_name, image_path, detected_objects, best_confidence, image_category)
+        SELECT message_id, channel_name, image_path, detected_objects, best_confidence, image_category
+        FROM temp_yolo
+        ON CONFLICT (message_id) 
+        DO UPDATE SET
+            detected_objects = EXCLUDED.detected_objects,
+            best_confidence = EXCLUDED.best_confidence,
+            image_category = EXCLUDED.image_category;
+        """
+        connection.execute(text(upsert_query))
+        connection.commit()
+    
+    print(f"Successfully processed {len(df)} YOLO detections.")
 
 if __name__ == "__main__":
     engine = create_engine(DATABASE_URL)
     create_raw_schema(engine)
     load_json_to_postgres(engine)
+    load_yolo_to_postgres(engine)
