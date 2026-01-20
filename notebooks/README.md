@@ -7,8 +7,8 @@ This directory contains experimental code, Exploratory Data Analysis (EDA), and 
 | Notebook | Task | Description |
 | :--- | :--- | :--- |
 | **`01_scraping_prototype.ipynb`** | **Task 1** | Testing Telegram API connection, channel entity extraction, and message format analysis. |
-| **`02_yolo_inference.ipynb`** | **Task 3** | Prototyping YOLOv8 object detection on sample images and visualizing bounding boxes. |
-| **`03_warehouse_analysis.ipynb`** | **Reporting** | Connecting to the Postgres warehouse to generate charts and insights for the final report. |
+| **`02_yolo_inference.ipynb`** (planned)| **Task 3** | Prototyping YOLOv8 object detection on sample images and visualizing bounding boxes. |
+| **`03_warehouse_analysis.ipynb`** (planned)| **Reporting** | Connecting to the Postgres warehouse to generate charts and insights for the final report. |
 
 ## ⚠️ Usage Note
 These notebooks are for **development and analysis only**. 
