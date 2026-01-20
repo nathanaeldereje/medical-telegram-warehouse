@@ -146,13 +146,13 @@ dbt build   # Run models and tests
 
 
 ### 5. Serve Insights (API)
-*Coming Soon:* Launch the FastAPI server to access the analytical endpoints.
+Launch the FastAPI server to access the analytical endpoints.
 ```bash
 uvicorn api.main:app --reload
 ```
 *Access docs at: `http://localhost:8000/docs`*
 
-## 🚀 Project Roadmap(As of Jan 18)
+## 🚀 Project Roadmap(As of Jan 20)
 
 | Phase | Task Description | Status |
 | :--- | :--- | :--- |
@@ -160,12 +160,15 @@ uvicorn api.main:app --reload
 | **1. Scraping** | Extract text/images from Telegram channels | ✅ Completed |
 | **2. Modeling** | Load data to Postgres & build Star Schema with dbt | ✅ Completed |
 | **3. Enrichment** | Integrate YOLOv8 for image classification | ✅ Completed |
-| **4. API** | Build FastAPI endpoints for analytics | 🚧 In Progress |
-| **5. Orchestration** | Automate workflow with Dagster | ⏳ Pending |
+| **4. API** | Build FastAPI endpoints for analytics | ✅ Completed |
+| **5. Orchestration** | Automate workflow with Dagster | 🚧 In Progress |
 
 ## 📸 Dashboard / API Preview
-*(Screenshots of dbt docs, API Swagger UI, and Dagster Graph will be added here upon completion)*
+### API Documentation (Swagger UI)
+*(Add a screenshot here of your localhost:8000/docs page showing the 4 endpoints)*
 
+### dbt Lineage Graph
+*(Add a screenshot here of your dbt docs lineage graph)*
 ---
 **Author:** Nathanael Dereje  
 **Date:** January 2026
