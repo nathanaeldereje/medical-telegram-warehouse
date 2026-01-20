@@ -1,7 +1,7 @@
 # Ethiopian Medical Business Intelligence Warehouse 🏥
 ### **Project:** Kara Solutions Data Platform
 **Role:** Data Engineer  
-**Status:** 🚧 In Progress  
+**Status:** ✅ Completed  
 
 ## 📖 Project Overview
 This project builds a robust, end-to-end **ELT (Extract, Load, Transform)** data pipeline for **Kara Solutions**, a leading data science consultancy in Ethiopia.
@@ -59,6 +59,8 @@ medical-telegram-warehouse/
 ├── tests/                # Unit tests
 ├── .env                  # Environment variables (API Keys, DB Creds)
 ├── docker-compose.yml    # Database & Service orchestration
+├── Dockerfile            # Container definition for API
+├── pipeline.py           # Dagster Orchestration Logic
 └── requirements.txt      # Python dependencies
 ```
 
@@ -107,27 +109,42 @@ medical-telegram-warehouse/
 
 ## 🔄 Recommended Workflow
 
-### 1. Data Collection (Extract)
+## 🔄 Recommended Workflow
+
+You can run the data pipeline using **Dagster (Automated)** or by executing each script **Manually**.
+
+### Option 1: Automated Pipeline (Dagster) - *Recommended*
+Run the full end-to-end pipeline (Scrape → Enrich → Load → Transform) with monitoring.
+
+```bash
+dagster dev -f pipeline.py
+```
+*   **Access UI:** `http://localhost:3000`
+*   Click **"Launch Run"** to execute the job.
+
+---
+
+### Option 2: Manual Execution (Step-by-Step)
+
+#### 1. Data Collection (Extract)
 Run the scraper to populate the Data Lake (`data/raw`).
 ```bash
 python scripts/scrape_data.py
 ```
 
-### 2. Object Detection (Enrich)
+#### 2. Object Detection (Enrich)
 Runs YOLOv8 on downloaded images to generate classification data (`yolo_results.csv`).
 ```bash
 python scripts/detect_objects.py
 ```
 
-
-
-### 3. Data Loading (Load)
+#### 3. Data Loading (Load)
 Syncs both the JSON messages and the YOLO CSV results into PostgreSQL (`raw` schema).
 ```bash
 python scripts/load_raw.py
 ```
 
-### 4. Data Transformation (Transform)
+#### 4. Data Transformation (Transform)
 Use dbt to clean data and build the Star Schema.
 
 **Note for Windows Users:**
@@ -143,14 +160,19 @@ dbt deps    # Install dependencies (dbt_utils)
 dbt build   # Run models and tests
 ```
 
-
+---
 
 ### 5. Serve Insights (API)
-Launch the FastAPI server to access the analytical endpoints.
+Once the data is ready (via Option 1 or 2), launch the FastAPI server.
+
 ```bash
 uvicorn api.main:app --reload
 ```
-*Access docs at: `http://localhost:8000/docs`*
+**Access the API:**
+*   **Documentation (Swagger UI):** `http://localhost:8000/docs`
+*   **Top Products:** `http://localhost:8000/api/reports/top-products`
+*   **Visual Stats:** `http://localhost:8000/api/reports/visual-content`
+
 
 ## 🚀 Project Roadmap(As of Jan 20)
 
@@ -161,14 +183,18 @@ uvicorn api.main:app --reload
 | **2. Modeling** | Load data to Postgres & build Star Schema with dbt | ✅ Completed |
 | **3. Enrichment** | Integrate YOLOv8 for image classification | ✅ Completed |
 | **4. API** | Build FastAPI endpoints for analytics | ✅ Completed |
-| **5. Orchestration** | Automate workflow with Dagster | 🚧 In Progress |
+| **5. Orchestration** | Automate workflow with Dagster | ✅ Completed |
 
 ## 📸 Dashboard / API Preview
-### API Documentation (Swagger UI)
-*(Add a screenshot here of your localhost:8000/docs page showing the 4 endpoints)*
 
-### dbt Lineage Graph
-*(Add a screenshot here of your dbt docs lineage graph)*
+### Orchestration (Dagster UI)
+### Orchestration (Dagster UI)
+<img src="assets\image.png" alt="Dagster Graph" width="800"/>
+
+### API Documentation (Swagger UI)
+<img src="assets\api.png" alt="API Docs" width="800"/>
+
+
 ---
 **Author:** Nathanael Dereje  
-**Date:** January 2026
+**Date:** January 20,2026

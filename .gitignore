@@ -24,3 +24,4 @@ notebooks/test*
 
 
 yolov8n.pt
+tmp*
