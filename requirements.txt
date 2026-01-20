@@ -25,5 +25,5 @@ pydantic==2.7.4
 pydantic-settings==2.3.3
 
 # --- Task 5: Orchestration (Dagster) ---
-# dagster==1.7.15
-# dagster-webserver==1.7.15
+dagster==1.7.15
+dagster-webserver==1.7.15
